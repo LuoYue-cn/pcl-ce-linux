@@ -41,6 +41,7 @@ public partial class MainWindow : Window
     private bool _leftWidthUpdateQueued;
     private bool _opaqueWindowMode;
     private bool _transparencyModeApplied;
+    private bool _displayChanged;
 
     public MainWindow()
     {
@@ -75,6 +76,16 @@ public partial class MainWindow : Window
         PropertyChanged += (_, e) =>
         {
             if (e.Property == ActualTransparencyLevelProperty) UpdateWindowTransparencyMode();
+            if (e.Property == IsVisibleProperty && IsVisible)
+                Dispatcher.UIThread.Post(RecoverWindowSurface, DispatcherPriority.Loaded);
+        };
+
+        // 游戏全屏会切换显示模式，隐藏中的窗口在模式恢复前可能拿到空白缓冲
+        Screens.Changed += (_, _) =>
+        {
+            _displayChanged = true;
+            LogWrapper.Info("UI", "屏幕配置发生变化，将在窗口重新显示时重建绘制缓冲");
+            Dispatcher.UIThread.Post(RecoverWindowSurface, DispatcherPriority.Background);
         };
         AddHandler(
             PointerPressedEvent,
@@ -255,6 +266,37 @@ public partial class MainWindow : Window
         LogWrapper.Info(
             "UI",
             $"窗口透明级别: {ActualTransparencyLevel}，不透明回退: {_opaqueWindowMode}");
+    }
+
+    /// <summary>
+    ///     显示模式切换后重建绘制缓冲。
+    ///     游戏全屏会改变屏幕分辨率/刷新率，X11 下的 EGL 表面可能随之失效；
+    ///     此时窗口若处于隐藏状态，重新显示时内容为空（整窗白色）。
+    ///     通过一次 1px 的尺寸往返强制后端重新分配缓冲并全量重绘。
+    /// </summary>
+    private void RecoverWindowSurface()
+    {
+        if (!IsVisible) return;
+
+        InvalidateVisual();
+        PanRoot.InvalidateVisual();
+
+        if (!_displayChanged) return;
+        _displayChanged = false;
+
+        if (WindowState != WindowState.Normal) return;
+
+        var width = Width;
+        var height = Height;
+        Width = width + 1d;
+        Height = height + 1d;
+        Dispatcher.UIThread.Post(
+            () =>
+            {
+                Width = width;
+                Height = height;
+            },
+            DispatcherPriority.Render);
     }
 
     private bool _renderConfigLogged;
