@@ -4,70 +4,112 @@
 
 <img src="PCL.Launcher/Assets/Images/icon.svg" alt="Logo" width="80" height="80">
 
-# PCL Community Edition
+# PCL CE Linux
 
-[![Stars](https://img.shields.io/github/stars/PCL-Community/PCL-CE?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiIGZpbGw9IiNlYWM1NGYiLz48L3N2Zz4=&logoSize=auto&label=stars&labelColor=444444&color=eac54f)](https://github.com/PCL-Community/PCL-CE/)
-![GitHub Release](https://img.shields.io/github/v/release/PCL-Community/PCL-CE?label=release&logo=github&style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PCL-Community/PCL-CE/build-test.yml?style=for-the-badge)
+An Avalonia-based Linux build of PCL CE, shipped as a ready-to-install Debian package.
 
-[![Issues](https://img.shields.io/github/issues/PCL-Community/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/PCL-Community/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/pulls)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PCL-Community/PCL-CE/total?style=for-the-badge)
-[![Bilibili](https://img.shields.io/badge/Threads-bilibili-00A4DB?style=for-the-badge&labelColor=444444&logo=bilibili)](https://space.bilibili.com/3546847192811755/dynamic) <br />
+[![Release](https://img.shields.io/github/v/release/LuoYue-cn/pcl-ce-linux?label=release&style=for-the-badge&logo=github)](https://github.com/LuoYue-cn/pcl-ce-linux/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/LuoYue-cn/pcl-ce-linux/total?style=for-the-badge&label=downloads)](https://github.com/LuoYue-cn/pcl-ce-linux/releases)
+[![Issues](https://img.shields.io/github/issues/LuoYue-cn/pcl-ce-linux?style=for-the-badge&label=issues&labelColor=444444&color=1F883D)](https://github.com/LuoYue-cn/pcl-ce-linux/issues)
 
-<a href="https://trendshift.io/repositories/21800?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-21800" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/21800/daily?language=C%23" alt="PCL-Community%2FPCL-CE | Trendshift" width="250" height="55"/></a>
-<a href="https://trendshift.io/repositories/21800" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21800" alt="PCL-Community%2FPCL-CE | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[Download](https://github.com/PCL-Community/PCL-CE/releases/latest) |
-[Upstream repo](https://github.com/Meloong-Git/PCL)
-
-[Submit issues](https://github.com/PCL-Community/PCL-CE/issues/new/choose) |
-[Contribution Guidelines](https://github.com/PCL-Community/PCL-CE/wiki/开发指南)
+[Download](https://github.com/LuoYue-cn/pcl-ce-linux/releases/latest) |
+[Upstream](https://github.com/PCL-Community/PCL-CE) |
+[Report an issue](https://github.com/LuoYue-cn/pcl-ce-linux/issues/new/choose)
 
 </div>
 
-PCL CE is a community edition developed as a secondary project based on PCL’s open-source code. It includes features and improvements that have not yet been implemented in the main branch.
+## 📖 What is this
 
-The version numbers of the community edition do not strictly correspond to those of the main branch, so please do not report community edition issues to the official repository.
+This repository is a **Linux port** of [PCL CE (Plain Craft Launcher Community Edition)](https://github.com/PCL-Community/PCL-CE).
 
-Everyone is welcome to try it out!
+Upstream PCL CE is built on WPF and only runs on Windows. This port builds on the community
+Avalonia migration ([PCL-CavE](https://github.com/PCL-Community/PCL-CavE)), replaces the UI layer
+with Avalonia, and adds Linux system integration, data-directory handling and packaging.
 
-**Developing group:** [599620549](https://qm.qq.com/q/PNQA4Md8wc) | **User group 1:** [1028074835](https://qm.qq.com/q/qrMGJo8BQQ) | **User group 2:** [1070029541](https://qm.qq.com/q/lBywbDMWhG)
+> This is an **unofficial, third-party build**, not affiliated with 龙腾猫跃 or PCL-Community.
+> Please report issues [here](https://github.com/LuoYue-cn/pcl-ce-linux/issues), not upstream.
 
-## 💻 Supported Platforms
+## ✨ Features
 
-| Operating System | Support Status | Requirements |
+- Instance management, game installation, mod / modpack download and install, crash analysis, skins
+- Microsoft, third-party (authlib) and offline profiles
+- Runs on X11 and Wayland (auto-detected, can be forced with environment variables)
+- The package is self-contained (.NET 10 runtime bundled)
+
+## 💻 Supported platforms
+
+| System | Status | Notes |
 |---|---|---|
-| Windows 10 1809 (17763) or later | ✅ Fully supported | [.NET 10 Desktop Runtime](http://get.dot.net/10) |
-| Windows 8 to Windows 10 1809 (17763) | ⚠️ Expected to run; community support offered at discretion | [.NET 10 Desktop Runtime](http://get.dot.net/10) |
-| Windows 7 or earlier | ❌ Not supported | N/A |
-| macOS / Linux / Other OS | ⚠️ Cross-platform development only (cross-compilation) | [.NET 10 SDK](http://get.dot.net/10) |
+| Debian 12 / Ubuntu 22.04+ | ✅ Supported | `amd64` package, X11 and Wayland |
+| Other Debian-based distros | ⚠️ Expected to work | Not individually tested |
+| arm64 | 🛠 Build it yourself | `ARCH=arm64 ./packaging/make-deb.sh` |
+| Windows / macOS | ❌ Not applicable | Use upstream PCL CE or the original PCL |
 
-**✅ Fully supported**: We will provide as much support as possible, but you must ensure you are using the latest version of the launcher.
+## 🚀 Install
 
-**⚠️ Expected to run; community support offered at discretion**: PCL CE is expected to run on these platforms, but full functionality is not guaranteed. You may need to upgrade to a fully supported OS version to receive further community technical support.
+### From the package (recommended)
 
-**❌ Not supported**: PCL CE may not be usable on these platforms and might not even launch at all. Please upgrade your OS to use PCL CE.
+Download the `.deb` from [Releases](https://github.com/LuoYue-cn/pcl-ce-linux/releases/latest):
 
-**⚠️ Cross-platform development only (cross-compilation)**: PCL CE’s source code can be built on macOS and Linux, but it cannot run directly. As a developer, you can develop on these platforms and then move the build artifacts to Windows for testing.
+```bash
+sudo apt install ./pcl-ce_<version>_amd64.deb
+pcl-ce
+```
 
-**Note**:     
-The community only supports the latest version of the launcher.    
-Depending on the nature of certain issues (e.g., an incomplete system environment), you may still need to upgrade your OS to continue receiving support.    
-PCL CE always recommends using the latest version of your OS for the best experience.    
-You can still try using the latest launcher version on unsupported platforms, but you may encounter many additional problems.
+### Build from source
 
-## 🔒 License
+Requires [.NET 10 SDK](https://get.dot.net/10) and `dpkg-deb`:
 
-- `PCL.Launcher/` and `PCL.Launcher.Core/` use [Custom License](https://github.com/PCL-Community/PCL-CE/blob/dev/PCL.Launcher.Core/LICENCE)
-- `All other directories` use [Apache License 2.0](https://github.com/PCL-Community/PCL-CE/blob/dev/LICENSE)
+```bash
+./packaging/make-deb.sh                 # output in dist/
+VER=2.15.1-1 ./packaging/make-deb.sh    # custom Debian version
+ARCH=arm64 ./packaging/make-deb.sh      # arm64
+```
 
-## 🌟 Statistic
-![Alt](https://repobeats.axiom.co/api/embed/3e46296e6e3a134991a783480fd2f62723bb0353.svg "Repobeats analytics image")
+### Run without packaging
 
-[![Star History Chart](https://api.star-history.com/svg?repos=PCL-Community/PCL-CE&type=Date)](https://www.star-history.com/#PCL-Community/PCL-CE&Date)
+```bash
+dotnet run --project PCL.Launcher -c Release
+```
 
-**Views** (Total / Today): [![Hits](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE)](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE&web=true)
-## ❤️ Contributors
+## 📂 Data directories
 
-[![](https://contrib.rocks/image?repo=PCL-Community/PCL-CE)](https://github.com/PCL-Community/PCL-CE/graphs/contributors)
+The launcher writes data next to its executable by default. When installed read-only under
+`/opt`, the launcher script redirects everything following the XDG spec:
+
+| Content | Path | Override |
+|---|---|---|
+| Data, logs, instances | `~/.local/share/PCLCE` | `PCL_PATH` / `PCL_PATH_LOCAL` |
+| Configuration | `~/.config/PCLCE` | `PCL_PATH_SHARED` |
+| Temporary files | `$TMPDIR/PCLCE` | `PCL_PATH_TEMP` |
+
+Default game folder: `<install dir>/.minecraft` when writable; otherwise an existing `~/.minecraft`,
+or `~/.local/share/PCLCE/.minecraft`.
+
+## 🔧 Environment variables
+
+| Variable | Effect |
+|---|---|
+| `PCL_OPAQUE_WINDOW=1` | Force an opaque window (use when transparency is unavailable) |
+| `PCL_FORCE_X11=1` | Force X11 |
+| `PCL_USE_WAYLAND=1` | Force Wayland |
+| `PCL_DISABLE_DEBUG_HINT=1` | Hide the Debug-build hint |
+
+## ⚠️ Known limitations
+
+- `amd64` packages only; other architectures must be built locally
+- The package is not GPG-signed
+- In-app auto-update does not apply to `/opt` installs; upgrade via a new package
+- Based on an Avalonia migration branch that is not merged upstream yet
+
+## 🔒 License & credits
+
+- Original work: **Plain Craft Launcher** by **龙腾猫跃**; community edition: [PCL-Community/PCL-CE](https://github.com/PCL-Community/PCL-CE)
+- Avalonia migration base: [PCL-Community/PCL-CavE](https://github.com/PCL-Community/PCL-CavE)
+- `PCL.Launcher/` and `PCL.Launcher.Core/` use a [custom license](PCL.Launcher.Core/LICENCE)
+- Everything else is licensed under [Apache License 2.0](LICENSE)
+
+## 🤖 AI usage
+
+Generative AI (DeepSeek-V4.1-flash) was used to assist with the Linux port, packaging and UI fixes.
+All changes were reviewed and verified manually.
