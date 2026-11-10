@@ -321,8 +321,7 @@ public static partial class GameLaunch
         {
             var scriptPath = currentLaunchOptions!.SaveBatch
                 ?? Path.Combine(
-                    LauncherPaths.ExecutableDirectory,
-                    "PCL",
+                    Paths.Data,
                     PCL.Core.Platform.PlatformRuntime.Current.Capabilities.UsesWindowsPaths ? "LatestLaunch.bat" : "LatestLaunch.sh");
             LauncherCommon.WriteFile(
                 scriptPath,

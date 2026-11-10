@@ -11,6 +11,7 @@ using PCL.Core.App.Localization;
 using PCL.Core.Logging;
 using PCL.Navigation;
 using PCL.UI;
+using PCL.UI.Controls;
 using PCL.UI.Animations;
 using PCL.UI.SystemIntegration;
 using PCL.Views.Pages;
@@ -27,10 +28,19 @@ public partial class MainWindow : Window
 {
     private const string LeftWidthAnimationKey = "MainWindow LeftChange";
 
+    /// <summary>
+    ///     强制使用不透明窗口（设置环境变量 <c>PCL_OPAQUE_WINDOW=1</c>）。
+    ///     用于在窗口透明不可用的环境下排查白边问题。
+    /// </summary>
+    private static readonly bool ForceOpaqueWindow =
+        Environment.GetEnvironmentVariable("PCL_OPAQUE_WINDOW") == "1";
+
     private readonly BackgroundLayer _background;
     private readonly ExtraButtonsPanel _extraButtons;
     private readonly TitleBar _titleBar;
     private bool _leftWidthUpdateQueued;
+    private bool _opaqueWindowMode;
+    private bool _transparencyModeApplied;
 
     public MainWindow()
     {
@@ -57,6 +67,11 @@ public partial class MainWindow : Window
         LocalizationService.LanguageChanged += OnLanguageChangedForLeftWidth;
 
         ApplyRoundedWindowClip();
+        Opened += (_, _) => UpdateWindowTransparencyMode();
+        PropertyChanged += (_, e) =>
+        {
+            if (e.Property == ActualTransparencyLevelProperty) UpdateWindowTransparencyMode();
+        };
         AddHandler(
             PointerPressedEvent,
             OnResizePointerPressed,
@@ -180,15 +195,77 @@ public partial class MainWindow : Window
 
     private void ApplyRoundedWindowClip()
     {
-        PanBack.SizeChanged += (_, e) =>
-        {
-            PanBack.Clip = new RectangleGeometry
+        PanBack.SizeChanged += (_, e) => RefreshWindowClip(e.NewSize);
+    }
+
+    private void RefreshWindowClip(Size size)
+    {
+        if (size.Width <= 0d || size.Height <= 0d) return;
+
+        // 不透明模式下不做圆角裁剪，否则四角仍会露出背景色
+        PanBack.Clip = _opaqueWindowMode
+            ? null
+            : new RectangleGeometry
             {
-                Rect = new Rect(e.NewSize),
+                Rect = new Rect(size),
                 RadiusX = 6d,
                 RadiusY = 6d
             };
-        };
+    }
+
+    /// <summary>
+    ///     根据实际获得的透明级别切换窗口外观。
+    ///     透明不可用时，窗口外圈的阴影留白会被 Avalonia 用回退色填充，表现为一圈白边；
+    ///     此时改为铺满整个窗口的实心背景，并禁用阴影与圆角。
+    /// </summary>
+    private void UpdateWindowTransparencyMode()
+    {
+        var opaque = ForceOpaqueWindow
+                     || ActualTransparencyLevel == WindowTransparencyLevel.None;
+
+        if (_transparencyModeApplied && opaque == _opaqueWindowMode) return;
+        _transparencyModeApplied = true;
+        _opaqueWindowMode = opaque;
+
+        if (opaque)
+        {
+            var background = ResolveWindowBackground();
+            Background = background;
+            TransparencyBackgroundFallback = background;
+            DropShadow.IsVisible = false;
+            PanBack.Margin = new Thickness(0d);
+            PanBack.CornerRadius = new CornerRadius(0d);
+            Tooltip.SetOpaqueMode(true);
+        }
+        else
+        {
+            Background = Brushes.Transparent;
+            TransparencyBackgroundFallback = ResolveWindowBackground();
+            DropShadow.IsVisible = true;
+            PanBack.Margin = new Thickness(10d);
+            PanBack.CornerRadius = new CornerRadius(6d);
+            Tooltip.SetOpaqueMode(false);
+        }
+
+        RefreshWindowClip(PanBack.Bounds.Size);
+        LogWrapper.Info(
+            "UI",
+            $"窗口透明级别: {ActualTransparencyLevel}，不透明回退: {_opaqueWindowMode}");
+    }
+
+    private static IBrush ResolveWindowBackground()
+    {
+        if (Application.Current is { } application)
+        {
+            if (application.TryFindResource("ColorBrushBackground", out var value)
+                && value is IBrush background)
+                return background;
+            if (application.TryFindResource("ColorBrushWhite", out value)
+                && value is IBrush white)
+                return white;
+        }
+
+        return Brushes.White;
     }
 
     private void OnResizePointerPressed(object? sender, PointerPressedEventArgs e)

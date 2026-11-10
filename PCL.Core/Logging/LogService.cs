@@ -64,8 +64,9 @@ public class LogService : ILifecycleLogService
     public Task StartAsync()
     {
         Context.Trace("正在初始化 Logger 实例");
+        // 日志目录跟随数据目录，以便以包管理器安装到只读目录时仍可写入
         var baseConfig =
-            new LoggerConfiguration(Path.Combine(Basics.ExecutableDirectory, "PCL", "Log"));
+            new LoggerConfiguration(Path.Combine(Paths.Data, "Log"));
         var initialLevel = _GetInitialMinLevel(baseConfig.MinLogLevel);
         if (_explicitMinLevel is null && ConfigService.IsInitialized && Config.Debug.Enabled)
             initialLevel = LogLevel.Trace;

@@ -76,13 +76,12 @@ public static class Paths
         _sharedLocalData = GetSpecialPath(Special.LocalApplicationData, name);
         _temp = Path.Combine(Path.GetTempPath(), name);
         OldSharedData = GetSpecialPath(Special.ApplicationData, oldName);
-#if DEBUG
-        // read environment variables
+        // 读取环境变量（Release 同样生效：以包管理器安装到 /opt 等只读目录时，
+        // 由启动脚本通过 PCL_PATH 将数据目录重定向到用户可写位置）
         EnvironmentInterop.ReadVariable("PCL_PATH", ref _data);
         EnvironmentInterop.ReadVariable("PCL_PATH_SHARED", ref _sharedData);
         EnvironmentInterop.ReadVariable("PCL_PATH_LOCAL", ref _sharedLocalData);
         EnvironmentInterop.ReadVariable("PCL_PATH_TEMP", ref _temp);
-#endif
         // create directories
         Directory.CreateDirectory(_data);
         Directory.CreateDirectory(_sharedData);

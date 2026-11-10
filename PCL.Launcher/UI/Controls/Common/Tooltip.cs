@@ -42,6 +42,24 @@ public sealed class Tooltip
     private static Border? _shell;
     private static ScaleTransform? _scaler;
     private static bool _closing;
+    private static bool _opaqueMode;
+
+    /// <summary>
+    ///     透明不可用时关闭阴影与圆角。浮层四周原本留出 <see cref="ShadowBlur" /> 的空间绘制阴影，
+    ///     若窗口透明失效，这段留白会被回退色填充，表现为提示框外的一圈白边。
+    /// </summary>
+    public static void SetOpaqueMode(bool enabled)
+    {
+        _opaqueMode = enabled;
+        if (_shell is null) return;
+
+        _shell.CornerRadius = enabled ? default : new CornerRadius(8d);
+        _shell.BoxShadow = enabled
+            ? default
+            : BoxShadows.Parse("0 0 18 0 #26000000");
+        if (_shell.Parent is Grid wrap)
+            wrap.Margin = enabled ? new Thickness(0d) : new Thickness(ShadowBlur + 1d);
+    }
 
     public static readonly AttachedProperty<bool> IsEnabledProperty =
         AvaloniaProperty.RegisterAttached<Tooltip, Control, bool>("IsEnabled", true);
@@ -275,6 +293,7 @@ public sealed class Tooltip
         };
 
         _ApplyThemeBrushes();
+        SetOpaqueMode(_opaqueMode);
     }
 
     private static void _ApplyThemeBrushes()

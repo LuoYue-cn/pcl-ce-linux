@@ -498,8 +498,8 @@ public partial class PageLaunchLeftViewModel : ViewModelBase
     private static void PrepareAutoModpackFolder()
     {
         var separator = Path.DirectorySeparatorChar;
-        var folder = Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft") + separator;
-        States.Game.SelectedFolder = "$.minecraft" + separator;
+        var folder = LauncherPaths.DefaultMinecraftFolder + separator;
+        States.Game.SelectedFolder = LauncherPaths.DefaultMinecraftFolder + separator;
         if (!Directory.Exists(folder))
         {
             Directory.CreateDirectory(folder);

@@ -237,11 +237,11 @@ public static class GameFolders
             return;
 
         Directory.CreateDirectory(
-            Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft", "versions"));
+            Path.Combine(LauncherPaths.DefaultMinecraftFolder, "versions"));
         cacheMcFolderList.Add(
             McFolder.CreateBuiltin(
                 "Select.Folder.CurrentFolder",
-                Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft")
+                LauncherPaths.DefaultMinecraftFolder
                 + Path.DirectorySeparatorChar,
                 McFolder.Types.Original));
     }

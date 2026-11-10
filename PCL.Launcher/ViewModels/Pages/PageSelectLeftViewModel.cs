@@ -50,7 +50,7 @@ public partial class PageSelectLeftViewModel : ViewModelBase
         _lastFolders = snapshot;
         Folders = _lastFolders;
         CanCreateFolder = !Directory.Exists(
-            Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft"));
+            LauncherPaths.DefaultMinecraftFolder);
         SelectedFolder = selected;
         return true;
     }
@@ -75,7 +75,7 @@ public partial class PageSelectLeftViewModel : ViewModelBase
     {
         return GameFolders.mcFolderList.Count == 1
             && folder.Location
-            == Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft")
+            == LauncherPaths.DefaultMinecraftFolder
             + Path.DirectorySeparatorChar
                 ? "Select.Folder.Clear"
                 : "Common.Action.Delete";
@@ -86,7 +86,7 @@ public partial class PageSelectLeftViewModel : ViewModelBase
         return folder.Type is GameFolders.McFolder.Types.Original
                 or GameFolders.McFolder.Types.RenamedOriginal
             && folder.Location
-            == Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft")
+            == LauncherPaths.DefaultMinecraftFolder
             + Path.DirectorySeparatorChar
             && GameFolders.mcFolderList.Count == 1;
     }
@@ -180,13 +180,14 @@ public partial class PageSelectLeftViewModel : ViewModelBase
             return;
         }
 
-        var minecraftFolder = Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft")
+        var minecraftFolder = LauncherPaths.DefaultMinecraftFolder
             + Path.DirectorySeparatorChar;
         if (!Directory.Exists(minecraftFolder))
         {
             Directory.CreateDirectory(minecraftFolder);
             Directory.CreateDirectory(Path.Combine(minecraftFolder, "versions"));
-            States.Game.SelectedFolder = "$.minecraft" + Path.DirectorySeparatorChar;
+            States.Game.SelectedFolder = LauncherPaths.DefaultMinecraftFolder
+                + Path.DirectorySeparatorChar;
             GameFolders.ApplySelectedFolder(minecraftFolder);
             GameFolders.McFolderLauncherProfilesJsonCreate(minecraftFolder);
             HintService.Show(Hints.Success(Lang.Text("Select.Folder.CreateSuccess")));
@@ -655,7 +656,7 @@ public partial class PageSelectLeftViewModel : ViewModelBase
         var separator = Path.DirectorySeparatorChar;
         var location = folder.Location;
         var minecraftFolder =
-            Path.Combine(LauncherPaths.ExecutableDirectory, ".minecraft") + separator;
+            LauncherPaths.DefaultMinecraftFolder + separator;
         var mojangFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 ".minecraft")
