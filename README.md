@@ -23,9 +23,8 @@
 
 本仓库是 [PCL CE（Plain Craft Launcher 社区版）](https://github.com/PCL-Community/PCL-CE) 的 **Linux 移植版**。
 
-原版 PCL CE 使用 WPF，只能在 Windows 上运行。本仓库基于社区的 Avalonia 迁移工作
-（[PCL-CavE](https://github.com/PCL-Community/PCL-CavE)），把界面层替换为 Avalonia，
-并补上了 Linux 下的系统集成、数据目录处理与打包发布。
+原版 PCL CE 使用 WPF，只能在 Windows 上运行。本仓库把界面层迁移到 Avalonia，
+并补上了 Linux 下的系统集成、数据目录处理与打包发布。后续功能更新主要参考原版 PCL CE。
 
 > 本项目是**第三方修改版**，与龙腾猫跃及 PCL-Community 均无隶属关系。
 > 遇到问题请提交到[本仓库](https://github.com/LuoYue-cn/pcl-ce-linux/issues)，不要向上游反馈。
@@ -116,7 +115,6 @@ dotnet publish PCL.Launcher/PCL.Launcher.csproj -c Release -r linux-x64 --self-c
 ## 🔒 许可证与署名
 
 - 原始作品：**Plain Craft Launcher**，作者 **龙腾猫跃**；社区维护版本：[PCL-Community/PCL-CE](https://github.com/PCL-Community/PCL-CE)
-- Avalonia 迁移基础：[PCL-Community/PCL-CavE](https://github.com/PCL-Community/PCL-CavE)
 - `PCL.Launcher/`、`PCL.Launcher.Core/` 使用 [自定义许可](PCL.Launcher.Core/LICENCE)（《PCL 分发有限许可》）
 - 其余目录使用 [Apache License 2.0](LICENSE)
 

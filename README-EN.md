@@ -22,9 +22,9 @@ An Avalonia-based Linux build of PCL CE, shipped as a ready-to-install Debian pa
 
 This repository is a **Linux port** of [PCL CE (Plain Craft Launcher Community Edition)](https://github.com/PCL-Community/PCL-CE).
 
-Upstream PCL CE is built on WPF and only runs on Windows. This port builds on the community
-Avalonia migration ([PCL-CavE](https://github.com/PCL-Community/PCL-CavE)), replaces the UI layer
-with Avalonia, and adds Linux system integration, data-directory handling and packaging.
+Upstream PCL CE is built on WPF and only runs on Windows. This port migrates the UI layer to
+Avalonia and adds Linux system integration, data-directory handling and packaging. Future updates
+mainly follow upstream PCL CE.
 
 > This is an **unofficial, third-party build**, not affiliated with 龙腾猫跃 or PCL-Community.
 > Please report issues [here](https://github.com/LuoYue-cn/pcl-ce-linux/issues), not upstream.
@@ -107,7 +107,6 @@ or `~/.local/share/PCLCE/.minecraft`.
 ## 🔒 License & credits
 
 - Original work: **Plain Craft Launcher** by **龙腾猫跃**; community edition: [PCL-Community/PCL-CE](https://github.com/PCL-Community/PCL-CE)
-- Avalonia migration base: [PCL-Community/PCL-CavE](https://github.com/PCL-Community/PCL-CavE)
 - `PCL.Launcher/` and `PCL.Launcher.Core/` use a [custom license](PCL.Launcher.Core/LICENCE)
 - Everything else is licensed under [Apache License 2.0](LICENSE)
 

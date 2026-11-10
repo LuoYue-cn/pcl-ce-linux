@@ -13,8 +13,7 @@
 </div>
 
 本倉庫是 [PCL CE](https://github.com/PCL-Community/PCL-CE) 的 **Linux 移植版**，
-基於社群的 Avalonia 遷移工作（[PCL-CavE](https://github.com/PCL-Community/PCL-CavE)），
-提供 Debian / Ubuntu 安裝包。
+將介面層遷移到 Avalonia，並提供 Debian / Ubuntu 安裝包。後續更新主要參考原版 PCL CE。
 
 > 本專案為第三方修改版，與龙腾猫跃及 PCL-Community 均無隸屬關係。
 
