@@ -19,9 +19,14 @@ public static partial class Libraries
 
         result.AddRange(McLibNetFilesFromTokens(McLibListGet(mcInstance, false)));
 
-        var authlibInjectorFile = _GetAuthlibInjectorFile();
-        if (authlibInjectorFile is not null)
-            result.Add(authlibInjectorFile);
+        // authlib-injector 仅第三方验证需要；离线/正版档案无需查询，
+        // 否则每次启动都要多等一次远程请求。
+        if (_NeedsAuthlibInjector())
+        {
+            var authlibInjectorFile = _GetAuthlibInjectorFile();
+            if (authlibInjectorFile is not null)
+                result.Add(authlibInjectorFile);
+        }
 
         var mesaLoaderFile = _GetMesaLoaderFile();
         if (mesaLoaderFile is not null)
@@ -50,6 +55,19 @@ public static partial class Libraries
         }
     }
 
+    /// <summary>当前登录方式是否需要 authlib-injector（仅第三方验证使用）。</summary>
+    private static bool _NeedsAuthlibInjector()
+    {
+        try
+        {
+            return GameLaunch.mcLoginLoader.output.Type == "Auth";
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     private static DownloadFile? _GetAuthlibInjectorFile()
     {
         var authlibTargetFile = Path.Combine(
@@ -61,12 +79,21 @@ public static partial class Libraries
             : _BuildAuthlibInjectorFile(authlibDownloadInfo, authlibTargetFile);
     }
 
+    private static JsonObject? _authlibInfoCache;
+    private static DateTime _authlibInfoCacheTime = DateTime.MinValue;
+    private static readonly TimeSpan AuthlibInfoCacheTtl = TimeSpan.FromHours(6);
+
     private static JsonObject? _FetchAuthlibInjectorInfo()
     {
+        // 该信息只用于判断是否有新版本，缓存一段时间以免每次启动都多等一次网络请求
+        if (_authlibInfoCache is { } cached
+            && DateTime.UtcNow - _authlibInfoCacheTime < AuthlibInfoCacheTtl)
+            return cached;
+
         try
         {
             LauncherCommon.Log("[Minecraft] 开始获取 Authlib-Injector 下载信息");
-            return (JsonObject)
+            var info = (JsonObject)
                 LauncherCommon.GetJson(
                     NetFacade.NetGetCodeByLoader(
                         [
@@ -74,11 +101,14 @@ public static partial class Libraries
                             "https://bmclapi2.bangbang93.com/mirrors/authlib-injector/artifact/latest.json"
                         ],
                         isJson: true));
+            _authlibInfoCache = info;
+            _authlibInfoCacheTime = DateTime.UtcNow;
+            return info;
         }
         catch (Exception ex)
         {
             LauncherCommon.Log(ex, "获取 Authlib-Injector 下载信息失败");
-            return null;
+            return _authlibInfoCache;
         }
     }
 

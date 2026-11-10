@@ -44,6 +44,8 @@ public static partial class GameLaunch
     /// <summary>
     ///     未登录正版账号时提示购买正版。提示不阻断启动：选择“以后再说”会照常进入游戏。
     /// </summary>
+    private static bool _purchaseHintShown;
+
     private static void _ShowPurchaseHint()
     {
         if (ProfileService.HasMicrosoftProfile)
@@ -51,6 +53,11 @@ public static partial class GameLaunch
 
         if (currentLaunchOptions?.SaveBatch is not null)
             return;
+
+        // 同一次运行内只提示一次，避免每次启动游戏都打断流程
+        if (_purchaseHintShown)
+            return;
+        _purchaseHintShown = true;
 
         if (LaunchUi.ShowMessageBox(
                 Lang.Text("Minecraft.Launch.PurchaseHint.Message"),
