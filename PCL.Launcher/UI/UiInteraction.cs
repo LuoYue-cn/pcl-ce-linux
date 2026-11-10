@@ -514,8 +514,11 @@ public sealed class LaunchUiBridge : ILaunchUi
 
         var window = UiInteraction.MainWindow;
         if (window is null) return;
-        if (state == LaunchWindowState.Hide) window.Hide();
-        else window.WindowState = WindowState.Minimized;
+
+        // X11 下 Hide() 会把窗口 unmap，游戏切换全屏显示模式后重新显示时
+        // 常拿到空白缓冲（整窗白色）。统一改为最小化：窗口保持映射，
+        // 恢复时无需重建表面，各发行版行为也更一致。
+        window.WindowState = WindowState.Minimized;
     }
 
     public (double Width, double Height) GetMainPanSize()

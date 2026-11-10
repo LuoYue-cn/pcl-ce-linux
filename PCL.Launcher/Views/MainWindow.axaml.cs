@@ -78,6 +78,8 @@ public partial class MainWindow : Window
             if (e.Property == ActualTransparencyLevelProperty) UpdateWindowTransparencyMode();
             if (e.Property == IsVisibleProperty && IsVisible)
                 Dispatcher.UIThread.Post(RecoverWindowSurface, DispatcherPriority.Loaded);
+            if (e.Property == WindowStateProperty && WindowState == WindowState.Normal)
+                Dispatcher.UIThread.Post(RecoverWindowSurface, DispatcherPriority.Loaded);
         };
 
         // 游戏全屏会切换显示模式，隐藏中的窗口在模式恢复前可能拿到空白缓冲
