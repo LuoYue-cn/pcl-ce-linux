@@ -55,3 +55,5 @@ pcl-ce
 | `PCL_OPAQUE_WINDOW=1` | 强制不透明窗口，用于窗口透明不可用、出现白边的环境 |
 | `PCL_FORCE_X11=1` | 强制使用 X11 而非 Wayland |
 | `PCL_USE_WAYLAND=1` | 强制使用 Wayland |
+| `PCL_RENDER_MODE=software` | 指定 X11 渲染后端（`software`/`glx`/`egl`/`vulkan`） |
+| `PCL_RENDER_ON_UI_THREAD=1` | 在 UI 线程渲染 |

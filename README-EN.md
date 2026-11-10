@@ -93,6 +93,8 @@ or `~/.local/share/PCLCE/.minecraft`.
 | `PCL_OPAQUE_WINDOW=1` | Force an opaque window (use when transparency is unavailable) |
 | `PCL_FORCE_X11=1` | Force X11 |
 | `PCL_USE_WAYLAND=1` | Force Wayland |
+| `PCL_RENDER_MODE=software` | Rendering backend (`software` / `glx` / `egl` / `vulkan`, comma-separated fallback chain) |
+| `PCL_RENDER_ON_UI_THREAD=1` | Render on the UI thread (driver compatibility) |
 | `PCL_DISABLE_DEBUG_HINT=1` | Hide the Debug-build hint |
 
 ## ⚠️ Known limitations

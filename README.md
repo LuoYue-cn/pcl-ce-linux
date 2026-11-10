@@ -102,6 +102,8 @@ dotnet publish PCL.Launcher/PCL.Launcher.csproj -c Release -r linux-x64 --self-c
 | `PCL_OPAQUE_WINDOW=1` | 强制不透明窗口（窗口透明不可用、出现白边时使用） |
 | `PCL_FORCE_X11=1` | 强制使用 X11 |
 | `PCL_USE_WAYLAND=1` | 强制使用 Wayland |
+| `PCL_RENDER_MODE=software` | 指定渲染后端（`software` / `glx` / `egl` / `vulkan`，可逗号分隔作为回退链） |
+| `PCL_RENDER_ON_UI_THREAD=1` | 在 UI 线程渲染，部分驱动的兼容性选项 |
 | `PCL_DISABLE_DEBUG_HINT=1` | 隐藏 Debug 构建的提示 |
 
 ## ⚠️ 已知限制

@@ -67,7 +67,11 @@ public partial class MainWindow : Window
         LocalizationService.LanguageChanged += OnLanguageChangedForLeftWidth;
 
         ApplyRoundedWindowClip();
-        Opened += (_, _) => UpdateWindowTransparencyMode();
+        Opened += (_, _) =>
+        {
+            UpdateWindowTransparencyMode();
+            LogRenderConfigOnce();
+        };
         PropertyChanged += (_, e) =>
         {
             if (e.Property == ActualTransparencyLevelProperty) UpdateWindowTransparencyMode();
@@ -251,6 +255,15 @@ public partial class MainWindow : Window
         LogWrapper.Info(
             "UI",
             $"窗口透明级别: {ActualTransparencyLevel}，不透明回退: {_opaqueWindowMode}");
+    }
+
+    private bool _renderConfigLogged;
+
+    private void LogRenderConfigOnce()
+    {
+        if (_renderConfigLogged) return;
+        _renderConfigLogged = true;
+        LogWrapper.Info("UI", $"渲染配置: {LinuxPlatformStartup.RenderConfigSummary}");
     }
 
     private static IBrush ResolveWindowBackground()
