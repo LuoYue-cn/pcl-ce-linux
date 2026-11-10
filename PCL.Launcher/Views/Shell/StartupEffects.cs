@@ -190,7 +190,6 @@ public sealed class StartupEffects(
         {
             ShowSpecialVersionHint();
             ShowEulaDialog();
-            ShowTelemetryDialog();
             HardwareInfo.GetHardwareInfo();
         }
         catch (Exception ex)
@@ -255,23 +254,6 @@ public sealed class StartupEffects(
                 UiInteraction.Shutdown();
                 break;
         }
-    }
-
-    private static void ShowTelemetryDialog()
-    {
-        if (!Config.System.TelemetryConfig.IsDefault()) return;
-
-        var button = DialogService.Instance.Show(
-                    new TextDialogRequest
-                    {
-                        Title = Lang.Text("Main.Telemetry.Title"),
-                        Content = Lang.Text("Main.Telemetry.Message"),
-                        Buttons = DialogButtons.AgreeDecline,
-                        ForceWait = true
-                    })
-                .Result?.Button
-            ?? 0;
-        Config.System.TelemetryConfig.SetValue(button == 1, forceNewValue: true);
     }
 
     private static void OpenWebsite(string url)

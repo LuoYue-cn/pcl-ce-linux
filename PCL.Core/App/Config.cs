@@ -575,7 +575,7 @@ public static partial class Config
         /// <summary>
         /// 游戏启动后启动器可见性。
         /// </summary>
-        [ConfigItem<LauncherVisibility>("LaunchArgumentVisible", LauncherVisibility.DoNothing)] public partial LauncherVisibility LauncherVisibility { get; set; }
+        [ConfigItem<LauncherVisibility>("LaunchArgumentVisible", LauncherVisibility.MinimizeAndReopen)] public partial LauncherVisibility LauncherVisibility { get; set; }
 
         /// <summary>
         /// 游戏进程优先级。

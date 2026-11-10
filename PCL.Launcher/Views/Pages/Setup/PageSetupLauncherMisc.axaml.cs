@@ -68,8 +68,6 @@ public partial class PageSetupLauncherMisc : MyPageRight, ISetupResetPage
             HintService.Show(
                 Hints.Info(Lang.Text("Setup.Misc.HardwareAcceleration.RestartNotice")));
         });
-        CheckSystemTelemetry.Change += (_, _) =>
-            WriteIfReady(() => Config.System.Telemetry = CheckSystemTelemetry.Checked == true);
         CheckNetDohEnable.Change += (_, _) =>
             WriteIfReady(() => Config.Network.EnableDoH = CheckNetDohEnable.Checked == true);
         CheckDebugSkipCopy.Change += (_, _) =>
@@ -136,7 +134,6 @@ public partial class PageSetupLauncherMisc : MyPageRight, ISetupResetPage
     {
         if (!_loaded) return;
         Reload();
-        RefreshTelemetryToolTip();
     }
 
     public void Reload()
@@ -148,8 +145,6 @@ public partial class PageSetupLauncherMisc : MyPageRight, ISetupResetPage
             SliderMaxLog.Value = Config.System.MaxGameLog;
             CheckSystemDisableHardwareAcceleration.Checked =
                 Config.System.DisableHardwareAcceleration;
-            CheckSystemTelemetry.Checked =
-                !ViewModel.IsBuildUntrusted && Config.System.Telemetry;
 
             CheckNetDohEnable.Checked = Config.Network.EnableDoH;
             var proxyType = Math.Clamp(Config.Network.HttpProxy.Type, 0, 2);
@@ -174,25 +169,6 @@ public partial class PageSetupLauncherMisc : MyPageRight, ISetupResetPage
             _reloading = false;
         }
 
-        RefreshTelemetryToolTip();
-    }
-
-    private void RefreshTelemetryToolTip()
-    {
-        if (ViewModel.IsBuildUntrusted)
-        {
-            ToolTip.SetTip(
-                CheckSystemTelemetry,
-                Lang.Text("Setup.Misc.System.Telemetry.Unavailable"));
-            ToolTip.SetShowOnDisabled(CheckSystemTelemetry, true);
-        }
-        else
-        {
-            ToolTip.SetTip(
-                CheckSystemTelemetry,
-                Lang.Text("Setup.Misc.System.Telemetry.ToolTip"));
-            ToolTip.SetShowOnDisabled(CheckSystemTelemetry, false);
-        }
     }
 
     private void WriteIfReady(Action action)

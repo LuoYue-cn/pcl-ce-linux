@@ -683,20 +683,8 @@ public partial class PageInstanceSetupViewModel : ViewModelBase
 
     public static bool CanCreateOtherProfile()
     {
-#if DEBUG || DEBUGCI
+        // 不再限制必须先登录正版账号，离线与第三方档案均可直接创建
         return true;
-#else
-        try
-        {
-            return ProfileService.HasMicrosoftProfile
-                   || (Lang.IsFeaturesUnrestricted && ProfileService.Profiles.Count > 0)
-                   || !NetworkHelper.IsNetworkAvailable();
-        }
-        catch
-        {
-            return false;
-        }
-#endif
     }
 
     public async Task<bool> ApplyRendererAsync(int index)

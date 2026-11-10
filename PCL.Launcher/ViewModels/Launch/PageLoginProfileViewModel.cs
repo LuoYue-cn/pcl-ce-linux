@@ -22,8 +22,6 @@ public partial class PageLoginProfileViewModel : ViewModelBase
 
     [ObservableProperty] public partial bool ShowCreateHint { get; set; }
 
-    [ObservableProperty] public partial bool ShowMicrosoftHint { get; set; }
-
     /// <summary>档案集合重建完成后触发，页面据此重建列表控件。</summary>
     public event Action? ProfilesUpdated;
 
@@ -66,7 +64,6 @@ public partial class PageLoginProfileViewModel : ViewModelBase
         {
             var isEmpty = Profiles.Count == 0;
             ShowSelectHint = !isEmpty;
-            ShowMicrosoftHint = isEmpty;
             ShowCreateHint = isEmpty;
             if (isEmpty)
                 States.Hint.LaunchWithProfile = true;

@@ -23,17 +23,12 @@ public partial class PageSetupLauncherMiscViewModel : ViewModelBase
     [ObservableProperty]
     private string _httpProxyUsername = Config.Network.HttpProxy.CustomUsername;
 
-    [ObservableProperty] private bool _telemetryEnabled = !TelemetryService.IsBuildUntrusted;
-
-    public bool IsBuildUntrusted => TelemetryService.IsBuildUntrusted;
-
     public void Reload()
     {
         ActivityIndex = Math.Clamp(States.System.AnnounceSolution, 0, 2);
         HttpProxyText = Config.Network.HttpProxy.CustomAddress;
         HttpProxyUsername = Config.Network.HttpProxy.CustomUsername;
         HttpProxyPassword = Config.Network.HttpProxy.CustomPassword;
-        TelemetryEnabled = !TelemetryService.IsBuildUntrusted;
     }
 
     public void ApplyHttpProxy()
